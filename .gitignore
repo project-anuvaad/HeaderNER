@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# deployment
+/deployment
+
+# src wsgi testing
+/src/wsgi_test.py

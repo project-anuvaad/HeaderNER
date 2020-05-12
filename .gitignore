@@ -130,4 +130,5 @@ dmypy.json
 
 # virtual env
 /venv_headerner/
+/src/nohup.out
 

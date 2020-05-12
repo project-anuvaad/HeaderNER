@@ -132,3 +132,9 @@ dmypy.json
 /venv_headerner/
 /src/nohup.out
 
+# deployment folder
+/deployment/docker-entrypoint.sh
+/deployment/Dockerfile
+/deployment/nginx.conf
+/deployment/supervisord.conf
+/deployment/uwsgi_kd.ini

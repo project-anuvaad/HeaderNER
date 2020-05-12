@@ -23,9 +23,9 @@ class NER_resources(Resource):
         else:
             output_ner = list()
             for text in args['sentences']:
-                mix_model_dir = '/home/amit/Desktop/NER/NamedER/ner_kd/model_exp/exp_3_mix/'
-                model_dir_order = '/home/amit/Desktop/NER/NamedER/ner_kd/model_exp/exp_3_order/'
-                model_dir_judgment = '/home/amit/Desktop/NER/NamedER/ner_kd/model_exp/exp_3_judgment/'
+                mix_model_dir = '/opt/share/python/upload/models/exp_3_mix/'
+                model_dir_order = '/opt/share/python/upload/models/exp_3_order/'
+                model_dir_judgment = '/opt/share/python/upload/models/exp_3_judgment/'
                 tagged_text_result = SC_ner_annotation(model_dir_judgment, model_dir_order, mix_model_dir, text).main()
                 if tagged_text_result is None or mix_model_dir is None:
                     return jsonify({

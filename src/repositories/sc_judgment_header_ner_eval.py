@@ -62,6 +62,26 @@ class SC_ner_annotation(object):
             result_judgment_ner.append(annotation_json)
         return result_judgment_ner
 
+    def document_type(self):
+        try:
+            nlp = self.loading_model(self.mix_model_dir)
+            doc = nlp(self.page_text)
+            pagewise_tags = self.pagewise_entity_tags(doc)
+            first_page_tag = ['O_ITEM_NO', 'O_COURT_NO', 'O_SECTION']
+            last_page_tag = ['O_ORDER_OFFICER','O_ORDER_OFFICER_NAME']
+            middle_page_tag = ['O_CORAM','O_HEARING_DATE','O_CONDONATION_DELAY_EXEMPTION','O_COURT_COUNSEL_HEARING','O_COUNSEL_NAME']
+            if self.condition_check(first_page_tag, pagewise_tags) is True or self.condition_check(middle_page_tag, pagewise_tags) is True or self.condition_check(last_page_tag, pagewise_tags):
+                print("order_doc")
+                return {
+                    "document_type" : "order_doc"
+                }
+            else:
+                return {
+                    "document_type" : "judgment_doc"
+                }
+        except Exception as e:
+            print(e)
+
     def main(self):
         try:
             nlp = self.loading_model(self.mix_model_dir)
@@ -69,7 +89,7 @@ class SC_ner_annotation(object):
             pagewise_tags = self.pagewise_entity_tags(doc)
             first_page_tag = ['O_ITEM_NO', 'O_COURT_NO', 'O_SECTION']
             last_page_tag = ['O_ORDER_OFFICER','O_ORDER_OFFICER_NAME']
-            middle_page_tag = ['O_CORAM','O_HEARING_DATE','O_CONDONATION_DELAY_EXEMPTION','O_COURT_COUNSEL_HEARING','O_COUNSEL_NAME',]
+            middle_page_tag = ['O_CORAM','O_HEARING_DATE','O_CONDONATION_DELAY_EXEMPTION','O_COURT_COUNSEL_HEARING','O_COUNSEL_NAME']
             if self.condition_check(first_page_tag, pagewise_tags) is True or self.condition_check(middle_page_tag, pagewise_tags) is True or self.condition_check(last_page_tag, pagewise_tags):
                 result_ner = self.order_tagged_data(self.model_dir_order, self.page_text)
                 print("order document ner")

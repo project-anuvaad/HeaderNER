@@ -27,6 +27,7 @@ class NER_resources(Resource):
                 model_dir_order = '/opt/share/python/upload/models/exp_3_order/'
                 model_dir_judgment = '/opt/share/python/upload/models/exp_3_judgment/'
                 tagged_text_result = SC_ner_annotation(model_dir_judgment, model_dir_order, mix_model_dir, text).main()
+                doc_type = SC_ner_annotation(model_dir_judgment, model_dir_order, mix_model_dir, page_text).document_type()
                 if tagged_text_result is None or mix_model_dir is None:
                     return jsonify({
                         'status': {
@@ -41,5 +42,6 @@ class NER_resources(Resource):
                     'code' : 200,
                     'message' : 'api successful'
                 },
-                'ner_result' : output_ner
+                'ner_result' : output_ner,
+                'document_type' : doc_type
             })

@@ -6,9 +6,10 @@ API_URL_PREFIX = "/api/v0"
 HOST = 'localhost'
 PORT = 5001
 
-# FILE_STORAGE_PATH =  '/home/naresh/Food_Recognition_API/src/sample_images/chicke_curry.jpeg'#'/home/naresh/Tarento/Food_Recognition/Food_Recognition_API/src/sample_images/pancake.jpg' #'/home/dddhiraj/Documents/Tarento/Anuwad/Tabular_data_extraction/sample_images'# '/Users/kd/Workspace/python/github/data/input/' #
-# MODEL_STFILE_STORAGE_PATHORAGE_PATH =  '/home/naresh/model4b.10-0.68.hdf5'
-# IMAGE_BASE_PATH = '/opt/nginx/'
+mix_model_dir = '/opt/share/python/upload/models/exp_3_mix/'
+model_dir_order = '/opt/share/python/upload/models/exp_3_order/'
+model_dir_judgment = '/opt/share/python/upload/models/exp_3_judgment/'
+
 ENABLE_CORS = False
 
 

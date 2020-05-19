@@ -47,8 +47,10 @@ class SC_ner_annotation(object):
                 "tagged_value" : ent.text
             }
             result_order_ner.append(annotation_json)
-        return result_order_ner
-
+        return {
+            "page_ner" : result_order_ner,
+            "document_type" : "order_doc"
+        }
     # judgment document model upload and and tag data
     def judgment_tagged_data(self, model_dir_judgment, page_text):
         nlp = self.loading_model(self.model_dir_judgment)
@@ -60,27 +62,10 @@ class SC_ner_annotation(object):
                 "tagged_value" : ent.text
             }
             result_judgment_ner.append(annotation_json)
-        return result_judgment_ner
-
-    def document_type(self):
-        try:
-            nlp = self.loading_model(self.mix_model_dir)
-            doc = nlp(self.page_text)
-            pagewise_tags = self.pagewise_entity_tags(doc)
-            first_page_tag = ['O_ITEM_NO', 'O_COURT_NO', 'O_SECTION']
-            last_page_tag = ['O_ORDER_OFFICER','O_ORDER_OFFICER_NAME']
-            middle_page_tag = ['O_CORAM','O_HEARING_DATE','O_CONDONATION_DELAY_EXEMPTION','O_COURT_COUNSEL_HEARING','O_COUNSEL_NAME']
-            if self.condition_check(first_page_tag, pagewise_tags) is True or self.condition_check(middle_page_tag, pagewise_tags) is True or self.condition_check(last_page_tag, pagewise_tags):
-                print("order_doc")
-                return {
-                    "document_type" : "order_doc"
-                }
-            else:
-                return {
-                    "document_type" : "judgment_doc"
-                }
-        except Exception as e:
-            print(e)
+        return {
+            "page_ner" : result_judgment_ner,
+            "document_type" : "judgment_doc"
+        }
 
     def main(self):
         try:
@@ -92,11 +77,11 @@ class SC_ner_annotation(object):
             middle_page_tag = ['O_CORAM','O_HEARING_DATE','O_CONDONATION_DELAY_EXEMPTION','O_COURT_COUNSEL_HEARING','O_COUNSEL_NAME']
             if self.condition_check(first_page_tag, pagewise_tags) is True or self.condition_check(middle_page_tag, pagewise_tags) is True or self.condition_check(last_page_tag, pagewise_tags):
                 result_ner = self.order_tagged_data(self.model_dir_order, self.page_text)
-                print("order document ner")
+                print("NER done!!")
                 return result_ner
             else:
                 result_ner = self.judgment_tagged_data(self.model_dir_judgment, self.page_text)
-                print("judgment document ner")
+                print("NER done!!")
                 return result_ner
         except Exception as e:
             return e

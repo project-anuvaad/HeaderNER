@@ -37,7 +37,7 @@ class SC_ner_annotation(object):
                 return True
 
     # order document model upload and and tag data
-    def order_tagged_data(self, model_dir_order, page_text ):
+    def order_tagged_data(self):
         nlp = self.loading_model(self.model_dir_order)
         doc = nlp(self.page_text)
         result_order_ner = list()
@@ -52,7 +52,7 @@ class SC_ner_annotation(object):
             "document_type" : "order_doc"
         }
     # judgment document model upload and and tag data
-    def judgment_tagged_data(self, model_dir_judgment, page_text):
+    def judgment_tagged_data(self):
         nlp = self.loading_model(self.model_dir_judgment)
         doc = nlp(self.page_text)
         result_judgment_ner = list()
@@ -76,11 +76,11 @@ class SC_ner_annotation(object):
             last_page_tag = ['O_ORDER_OFFICER','O_ORDER_OFFICER_NAME']
             middle_page_tag = ['O_CORAM','O_HEARING_DATE','O_CONDONATION_DELAY_EXEMPTION','O_COURT_COUNSEL_HEARING','O_COUNSEL_NAME']
             if self.condition_check(first_page_tag, pagewise_tags) is True or self.condition_check(middle_page_tag, pagewise_tags) is True or self.condition_check(last_page_tag, pagewise_tags):
-                result_ner = self.order_tagged_data(self.model_dir_order, self.page_text)
+                result_ner = self.order_tagged_data()
                 print("NER done!!")
                 return result_ner
             else:
-                result_ner = self.judgment_tagged_data(self.model_dir_judgment, self.page_text)
+                result_ner = self.judgment_tagged_data()
                 print("NER done!!")
                 return result_ner
         except Exception as e:
